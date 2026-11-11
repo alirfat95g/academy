@@ -241,6 +241,11 @@ body {
 }
 .action:hover { background: #115e59; }
 .action:active { background: #134e4a; }
+.course-management { margin-top: 16px; padding-top: 16px; border-top: 1px solid #edf2f7; }
+.course-management .course-link { align-self: center; margin: 0; }
+.delete-link { color: #922d2d; text-underline-offset: .22em; }
+.action.action-danger { background: #922d2d; }
+.action.action-danger:hover { background: #772323; }
 .course-nav .action { color: #115e59; background: #e6f5f1; }
 .course-nav .action:hover { background: #d2ece5; }
 .action:focus-visible, .course-link:focus-visible, .editor :focus-visible {

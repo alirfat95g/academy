@@ -20,5 +20,11 @@
             <strong>{% if course.price == 0 %}رایگان{% else %}{{ course.price|floatformat:"-2g" }} تومان{% endif %}</strong>
         </div>
         <a class="course-link" href="{% url 'course_list' %}">بازگشت به فهرست دوره‌ها</a>
+        {% if request.user.is_staff %}
+            <div class="actions course-management">
+                <a class="action" href="{% url 'course_update' course.pk %}">ویرایش دوره</a>
+                <a class="delete-link" href="{% url 'course_delete' course.pk %}">حذف دوره</a>
+            </div>
+        {% endif %}
     </article>
 {% endblock %}

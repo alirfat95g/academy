@@ -34,8 +34,13 @@
             </fieldset>
             {% endfor %}
             <div class="actions">
-                <button class="action" type="submit">ثبت دوره</button>
-                <a class="course-link" href="{% url 'course_list' %}">انصراف</a>
+                {% if course %}
+                    <button class="action" type="submit">ذخیرهٔ تغییرات</button>
+                    <a class="course-link" href="{% url 'course_detail' course.pk %}">انصراف</a>
+                {% else %}
+                    <button class="action" type="submit">ثبت دوره</button>
+                    <a class="course-link" href="{% url 'course_list' %}">انصراف</a>
+                {% endif %}
             </div>
         </form>
     </section>

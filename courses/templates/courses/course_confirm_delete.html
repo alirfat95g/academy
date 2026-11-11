@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}حذف دوره | آموزشگاه{% endblock %}
+{% block content %}
+    <section class="course-card detail-panel">
+        <h1>حذف دوره</h1>
+        <p>دورهٔ «{{ course.title }}» برای همیشه حذف شود؟</p>
+        <form class="actions course-management" method="post">
+            {% csrf_token %}
+            <button class="action action-danger" type="submit">بله، دوره حذف شود</button>
+            <a class="course-link" href="{% url 'course_detail' course.pk %}">انصراف</a>
+        </form>
+    </section>
+{% endblock %}

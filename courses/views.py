@@ -40,3 +40,31 @@ def course_create(request):
         "courses/course_form.html",
         {"form": form, "heading": "ثبت دوره"},
     )
+
+
+@staff_member_required
+@require_http_methods(["GET", "POST"])
+def course_update(request, pk):
+    course = get_object_or_404(Course, pk=pk)
+    if request.method == "POST":
+        form = CourseForm(request.POST, instance=course)
+        if form.is_valid():
+            form.save()
+            return redirect("course_detail", pk=course.pk)
+    else:
+        form = CourseForm(instance=course)
+    return render(
+        request,
+        "courses/course_form.html",
+        {"form": form, "course": course, "heading": "ویرایش دوره"},
+    )
+
+
+@staff_member_required
+@require_http_methods(["GET", "POST"])
+def course_delete(request, pk):
+    course = get_object_or_404(Course, pk=pk)
+    if request.method == "POST":
+        course.delete()
+        return redirect("course_list")
+    return render(request, "courses/course_confirm_delete.html", {"course": course})
