@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block page_styles %}
+    <link rel="stylesheet" href="{% static 'courses/css/course-create.css' %}">
+{% endblock %}
+
+{% block title %}{{ heading }} | آموزشگاه{% endblock %}
+
+{% block content %}
+    <section class="editor create-page">
+        <header class="create-header">
+            <a class="course-link" href="{% url 'course_list' %}">فهرست دوره‌ها</a>
+            <h1>{{ heading }}</h1>
+        </header>
+        <form class="course-card create-form" method="post" novalidate>
+            {% csrf_token %}
+            {{ form.non_field_errors }}
+            {% for label, fields in form.sections %}
+            <fieldset class="create-section">
+                <legend>{{ label }}</legend>
+                <div class="form-fields">
+                {% for field in fields %}
+                <div class="row{% if field.name == 'title' or field.name == 'description' %} row-wide{% endif %}{% if field.field.widget.input_type == 'checkbox' %} row-check{% endif %}">
+                    {{ field.label_tag }}
+                    {{ field }}
+                    {% if field.help_text %}
+                        <small id="{{ field.auto_id }}_helptext">{{ field.help_text }}</small>
+                    {% endif %}
+                    {{ field.errors }}
+                </div>
+                {% endfor %}
+                </div>
+            </fieldset>
+            {% endfor %}
+            <div class="actions">
+                <button class="action" type="submit">ثبت دوره</button>
+                <a class="course-link" href="{% url 'course_list' %}">انصراف</a>
+            </div>
+        </form>
+    </section>
+{% endblock %}

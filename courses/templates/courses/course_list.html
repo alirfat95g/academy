@@ -22,7 +22,9 @@
                     </span>
                 </div>
 
-                <h2>{{ course.title }}</h2>
+                <h2>
+                    <a class="course-link" href="{% url 'course_detail' course.pk %}">{{ course.title }}</a>
+                </h2>
 
                 <div class="description">
                     {{ course.description|linebreaksbr }}
@@ -85,7 +87,7 @@
             </li>
         {% empty %}
             <li class="empty-state">
-                هنوز دوره‌ای ثبت نشده است.
+                دوره‌ای برای نمایش وجود ندارد.
             </li>
         {% endfor %}
     </ul>

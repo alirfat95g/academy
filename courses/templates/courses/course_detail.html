@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}{{ course.title }} | آموزشگاه{% endblock %}
+{% block content %}
+    <article class="course-card detail-panel">
+        <div class="card-labels">
+            <span class="badge">{{ course.category.name }}</span>
+            <span class="badge">{{ course.get_level_display }}</span>
+            {% if not course.is_active %}<span class="badge status-inactive">غیرفعال</span>{% endif %}
+        </div>
+        <h1>{{ course.title }}</h1>
+        <p class="description">{{ course.description|linebreaksbr }}</p>
+        <dl class="course-info">
+            <dt>ظرفیت</dt><dd>{{ course.capacity }} نفر</dd>
+            <dt>مدت آموزش</dt><dd><bdi>{{ course.duration }}</bdi></dd>
+            <dt>تاریخ شروع</dt><dd>{{ course.start_date|date:"Y/m/d"|default:"هنوز مشخص نشده" }}</dd>
+            <dt>ساعت شروع</dt><dd>{{ course.start_time|time:"H:i"|default:"هنوز مشخص نشده" }}</dd>
+        </dl>
+        <div class="course-meta">
+            <span>قیمت دوره</span>
+            <strong>{% if course.price == 0 %}رایگان{% else %}{{ course.price|floatformat:"-2g" }} تومان{% endif %}</strong>
+        </div>
+        <a class="course-link" href="{% url 'course_list' %}">بازگشت به فهرست دوره‌ها</a>
+    </article>
+{% endblock %}

@@ -8,14 +8,19 @@
 
     <title>{% block title %}آموزشگاه{% endblock %}</title>
 
-    <link rel="stylesheet" href="{% static 'courses/css/style.css' %}">
+
+    <link rel="stylesheet" href="{% static 'courses/css/style.css' %}?v=course-form-2">
+    {% block page_styles %}{% endblock %}
 </head>
 <body>
     <header class="site-header">
-        <nav class="container">
+        <nav class="container course-nav">
             <a class="brand" href="{% url 'course_list' %}">
                 آموزشگاه
             </a>
+            {% if request.user.is_staff %}
+                <a class="action" href="{% url 'course_create' %}">ثبت دورهٔ جدید</a>
+            {% endif %}
         </nav>
     </header>
 
