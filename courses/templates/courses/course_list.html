@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+
+{% block title %}فهرست دوره‌ها | آموزشگاه{% endblock %}
+
+{% block content %}
+    <section class="page-heading">
+        <p class="eyebrow">یادگیری را شروع کن</p>
+        <h1>دوره‌های آموزشی</h1>
+        <p>برای قدم بعدی مسیر یادگیری‌ات آماده شو.</p>
+    </section>
+
+    <ul class="course-grid">
+        {% for course in courses %}
+            <li class="course-card">
+                <div class="card-labels">
+                    <span class="badge">
+                        {{ course.category.name }}
+                    </span>
+
+                    <span class="badge">
+                        {{ course.get_level_display }}
+                    </span>
+                </div>
+
+                <h2>{{ course.title }}</h2>
+
+                <div class="description">
+                    {{ course.description|linebreaksbr }}
+                </div>
+
+                <dl class="course-info">
+                    <dt>ظرفیت</dt>
+                    <dd>{{ course.capacity }} نفر</dd>
+
+                    <dt>مدت کل آموزش</dt>
+                    <dd>
+                        <bdi>{{ course.duration }}</bdi>
+                    </dd>
+
+                    <dt>تاریخ شروع</dt>
+                    <dd>
+                        {{ course.start_date|date:"Y/m/d"|default:"هنوز مشخص نشده" }}
+                    </dd>
+
+                    <dt>ساعت شروع</dt>
+                    <dd>
+                        {{ course.start_time|time:"H:i"|default:"هنوز مشخص نشده" }}
+                    </dd>
+
+                    <dt>وضعیت دوره</dt>
+                    <dd>
+                        {% if course.is_active %}
+                            <span class="status-active">فعال</span>
+                        {% else %}
+                            <span class="status-inactive">غیرفعال</span>
+                        {% endif %}
+                    </dd>
+                </dl>
+
+                <details class="course-record">
+                    <summary>اطلاعات ثبت دوره</summary>
+
+                    <p>
+                        ایجاد:
+                        {{ course.created_at|date:"Y/m/d H:i" }}
+                    </p>
+
+                    <p>
+                        آخرین ویرایش:
+                        {{ course.updated_at|date:"Y/m/d H:i" }}
+                    </p>
+                </details>
+
+                <div class="course-meta">
+                    <span>قیمت دوره</span>
+
+                    <strong>
+                        {% if course.price == 0 %}
+                            رایگان
+                        {% else %}
+                            {{ course.price|floatformat:"-2g" }} تومان
+                        {% endif %}
+                    </strong>
+                </div>
+            </li>
+        {% empty %}
+            <li class="empty-state">
+                هنوز دوره‌ای ثبت نشده است.
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}
