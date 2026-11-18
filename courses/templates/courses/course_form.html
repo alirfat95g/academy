@@ -16,11 +16,8 @@
         <form class="course-card create-form" method="post" novalidate>
             {% csrf_token %}
             {{ form.non_field_errors }}
-            {% for label, fields in form.sections %}
-            <fieldset class="create-section">
-                <legend>{{ label }}</legend>
-                <div class="form-fields">
-                {% for field in fields %}
+            <div class="form-fields">
+                {% for field in form %}
                 <div class="row{% if field.name == 'title' or field.name == 'description' %} row-wide{% endif %}{% if field.field.widget.input_type == 'checkbox' %} row-check{% endif %}">
                     {{ field.label_tag }}
                     {{ field }}
@@ -30,9 +27,7 @@
                     {{ field.errors }}
                 </div>
                 {% endfor %}
-                </div>
-            </fieldset>
-            {% endfor %}
+            </div>
             <div class="actions">
                 {% if course %}
                     <button class="action" type="submit">ذخیرهٔ تغییرات</button>

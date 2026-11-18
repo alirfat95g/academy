@@ -13,7 +13,7 @@ def visible_courses(user):
     return courses.filter(is_active=True)
 
 
-@require_safe
+@require_safe #only GET and HEAD req
 def course_list(request):
     courses = visible_courses(request.user)
     return render(request, "courses/course_list.html", {"courses": courses})
@@ -33,6 +33,13 @@ def course_create(request):
         if form.is_valid():
             course = form.save()
             return redirect("course_detail", pk=course.pk)
+        else:
+            # Redisplay submitted values and validation errors.
+            return render(
+                request,
+                "courses/course_form.html",
+                {"form": form, "heading": "ثبت دوره"},
+            )
     else:
         form = CourseForm()
     return render(
@@ -51,6 +58,13 @@ def course_update(request, pk):
         if form.is_valid():
             form.save()
             return redirect("course_detail", pk=course.pk)
+        else:
+            # Redisplay submitted values and validation errors.
+            return render(
+                request,
+                "courses/course_form.html",
+                {"form": form, "course": course, "heading": "ویرایش دوره"},
+            )
     else:
         form = CourseForm(instance=course)
     return render(
